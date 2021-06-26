@@ -1,5 +1,7 @@
 # actions-self-hosted-runners
 
+[![CI](https://github.com/peaceiris/actions-self-hosted-runners/actions/workflows/ci.yml/badge.svg?event=push)](https://github.com/peaceiris/actions-self-hosted-runners/actions/workflows/ci.yml)
+
 GitHub Actions self-hosted runner on VirtualBox with Vagrant.
 
 - [actions/runner](https://github.com/actions/runner): The Runner for GitHub Actions

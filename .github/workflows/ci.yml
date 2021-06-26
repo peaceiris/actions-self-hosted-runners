@@ -1,0 +1,39 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  vagrant:
+    runs-on: ubuntu-20.04
+    timeout-minutes: 60
+    strategy:
+      matrix:
+        image:
+          - "ubuntu-20.04"
+    defaults:
+      run:
+        working-directory: "images/${{ matrix.image }}"
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install VirtualBox
+        run: |
+          sudo apt-get update && sudo apt-get upgrade -y
+          sudo apt-get install -y Virtualbox
+
+      - name: Install vagrant
+        run: |
+          curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
+          sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+          sudo apt-get update && sudo apt-get install -y vagrant
+
+      - run: vagrant plugin install dotenv
+      - name: Comment out runner scripts
+        run: |
+          sed -i 's@./config.sh@# ./config.sh@g' Vagrantfile
+          sed -i 's@nohup ./run.sh@# nohup ./run.sh@g' Vagrantfile
+      - run: VAGRANT_EXPERIMENTAL="disks" vagrant up

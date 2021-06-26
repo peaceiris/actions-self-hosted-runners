@@ -84,6 +84,7 @@ Vagrant.configure("2") do |config|
     apt install -y docker-ce docker-ce-cli containerd.io
     groupadd docker
     gpasswd -a vagrant docker
+    newgrp docker
     systemctl restart docker
 
     # Install docker-compose

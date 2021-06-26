@@ -32,4 +32,14 @@ jobs:
           gsed -i 's@./config.sh@# ./config.sh@g' Vagrantfile
           gsed -i 's@nohup ./run.sh@# nohup ./run.sh@g' Vagrantfile
 
+      - name: Generate .env
+        run: |
+          cat <<- EOF > .env
+          VB_CPUS = 2
+          VB_MEMORY = 1024 * 4
+          VB_DISK_SIZE = '7GB'
+          GHA_RUNNER_URL = ''
+          GHA_RUNNER_TOKEN = ''
+          EOF
+
       - run: VAGRANT_EXPERIMENTAL="disks" vagrant up

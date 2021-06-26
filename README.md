@@ -6,10 +6,11 @@
 git clone https://github.com/peaceiris/actions-self-hosted-runners.git
 cd ./actions-self-hosted-runners
 vim .env
-vagrant up --provider=virtualbox
+vagrant plugin install dotenv
+VAGRANT_EXPERIMENTAL="disks" vagrant up
 ```
 
-Create `.env` file as follows:
+Create `.env` file as follows.
 
 ```rb
 REPOSITORY_URL = 'https://github.com/[owner]/[repo]'

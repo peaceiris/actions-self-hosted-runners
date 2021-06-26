@@ -13,8 +13,8 @@ Vagrant.configure("2") do |config|
     vb.gui = false
 
     # Customize the amount of cpus and memory on the VM:
-    vb.cpus = 4
-    vb.memory = 1024 * 8
+    vb.cpus = ENV['VB_CPUS']
+    vb.memory = ENV['VB_MEMORY']
 
     # Fix https://www.virtualbox.org/ticket/15705
     vb.customize ["modifyvm", :id, "--cableconnected1", "on"]
@@ -29,7 +29,7 @@ Vagrant.configure("2") do |config|
     GHA_RUNNER_VERSION="2.278.0"
     curl -so actions-runner-linux-x64-${GHA_RUNNER_VERSION}.tar.gz -L https://github.com/actions/runner/releases/download/v${GHA_RUNNER_VERSION}/actions-runner-linux-x64-${GHA_RUNNER_VERSION}.tar.gz
     tar xzf ./actions-runner-linux-x64-${GHA_RUNNER_VERSION}.tar.gz
-    ./config.sh --url #{ENV['REPOSITORY_URL']} --token #{ENV['RUNNER_TOKEN']}
+    ./config.sh --url #{ENV['GHA_RUNNER_URL']} --token #{ENV['GHA_RUNNER_TOKEN']}
     nohup ./run.sh &
   SHELL
 end

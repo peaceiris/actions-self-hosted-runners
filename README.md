@@ -22,6 +22,8 @@ VAGRANT_EXPERIMENTAL="disks" vagrant up
 Create `.env` file as follows.
 
 ```rb
-REPOSITORY_URL = 'https://github.com/[owner]/[repo]'
-RUNNER_TOKEN = 'token_here'
+VB_CPUS = 4
+VB_MEMORY = 1024 * 8
+GHA_RUNNER_URL = ''
+GHA_RUNNER_TOKEN = ''
 ```

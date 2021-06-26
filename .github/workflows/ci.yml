@@ -1,0 +1,31 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+jobs:
+  vagrant:
+    runs-on: macos-10.15
+    timeout-minutes: 60
+    strategy:
+      matrix:
+        image:
+          - "ubuntu-20.04"
+    defaults:
+      run:
+        working-directory: "images/${{ matrix.image }}"
+    steps:
+      - uses: actions/checkout@v2
+
+      - run: brew install gnu-sed
+
+      - run: vagrant plugin install dotenv
+      - name: Comment out runner scripts
+        run: |
+          gsed -i 's@./config.sh@# ./config.sh@g' Vagrantfile
+          gsed -i 's@nohup ./run.sh@# nohup ./run.sh@g' Vagrantfile
+
+      - run: VAGRANT_EXPERIMENTAL="disks" vagrant up

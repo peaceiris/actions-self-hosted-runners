@@ -22,9 +22,9 @@ VAGRANT_EXPERIMENTAL="disks" vagrant up
 Create `.env` file as follows.
 
 ```rb
-VB_CPUS = 4
-VB_MEMORY = 1024 * 8
-VB_DISK_SIZE = '15GB'
+VB_CPUS = '4'
+VB_MEMORY = '8192'
+VB_DISK_SIZE = '30GB'
 GHA_RUNNER_URL = ''
 GHA_RUNNER_TOKEN = ''
 ```

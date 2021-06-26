@@ -13,8 +13,8 @@ Vagrant.configure("2") do |config|
     vb.gui = false
 
     # Customize the amount of cpus and memory on the VM:
-    vb.cpus = ENV['VB_CPUS']
-    vb.memory = ENV['VB_MEMORY']
+    vb.cpus = "#{ENV['VB_CPUS']}".to_i
+    vb.memory = "#{ENV['VB_MEMORY']}".to_i
 
     # Fix https://www.virtualbox.org/ticket/15705
     vb.customize ["modifyvm", :id, "--cableconnected1", "on"]

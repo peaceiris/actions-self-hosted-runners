@@ -52,13 +52,13 @@ Vagrant.configure("2") do |config|
   # Example for VirtualBox:
   #
   config.vm.provider "virtualbox" do |vb|
-    vb.name = "vagrant-virtualbox-github-actions-self-hosted-runner"
+    vb.name = "vb-github-actions-self-hosted-runner"
 
     # Display the VirtualBox GUI when booting the machine
     vb.gui = false
 
     # Customize the amount of memory on the VM:
-    vb.memory = "8192"
+    vb.memory = "10240"
 
     # Fix https://www.virtualbox.org/ticket/15705
     vb.customize ["modifyvm", :id, "--cableconnected1", "on"]
@@ -74,7 +74,7 @@ Vagrant.configure("2") do |config|
     apt update -y
     apt upgrade -y
     apt install -y jq wget \
-      python3 python3-pip build-essential libssl-dev libffi-dev python3-dev python3-venv
+      python3 python3-dev python3-pip python3-venv build-essential libssl-dev libffi-dev
 
     # Install docker
     apt install -y apt-transport-https ca-certificates curl gnupg lsb-release
@@ -113,6 +113,12 @@ Vagrant.configure("2") do |config|
     export CHROMEDRIVER_LATEST_VERSION=$(cat ${CHROMEDRIVER_TEMPDIR}/LATEST_RELEASE)
     wget -O ${CHROMEDRIVER_TEMPDIR}/chromedriver.zip "http://chromedriver.storage.googleapis.com/${CHROMEDRIVER_LATEST_VERSION}/chromedriver_linux64.zip"
     sudo unzip ${CHROMEDRIVER_TEMPDIR}/chromedriver.zip chromedriver -d /usr/local/bin/
+
+    # Install terraform
+    TERRAFORM_VERSION=$(curl -s https://checkpoint-api.hashicorp.com/v1/check/terraform | jq -r .current_version)
+    curl -LO "https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terraform_${TERRAFORM_VERSION}_linux_amd64.zip"
+    unzip -qq "terraform_${TERRAFORM_VERSION}_linux_amd64.zip" -d /usr/local/bin
+    rm -f "terraform_${TERRAFORM_VERSION}_linux_amd64.zip"
   SHELL
 
   config.vm.provision :vagrant_user, type: "shell", privileged: false, inline: <<-SHELL
@@ -120,20 +126,22 @@ Vagrant.configure("2") do |config|
 
     # install Linuxbrew
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-    test -d ~/.linuxbrew && eval $(~/.linuxbrew/bin/brew shellenv)
-    test -d /home/linuxbrew/.linuxbrew && eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
-    test -r ~/.bash_profile && echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.bash_profile
-    echo "eval \$($(brew --prefix)/bin/brew shellenv)" >>~/.profile
+    eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
     brew doctor
     brew update
     brew install \
       git \
       bash \
+      make \
+      gcc \
       hadolint \
       poetry \
       kubectl \
       kustomize \
       skaffold \
+      kind \
+      helm \
+      minikube \
       gh \
       netlify-cli \
       vercel \
@@ -166,8 +174,9 @@ Vagrant.configure("2") do |config|
 
     # Install actions/runner
     mkdir ~/actions-runner && cd ~/actions-runner
-    curl -o actions-runner-linux-x64-2.278.0.tar.gz -L https://github.com/actions/runner/releases/download/v2.278.0/actions-runner-linux-x64-2.278.0.tar.gz
-    tar xzf ./actions-runner-linux-x64-2.278.0.tar.gz
+    GHA_RUNNER_VERSION="2.278.0"
+    curl -o actions-runner-linux-x64-${GHA_RUNNER_VERSION}.tar.gz -L https://github.com/actions/runner/releases/download/v${GHA_RUNNER_VERSION}/actions-runner-linux-x64-${GHA_RUNNER_VERSION}.tar.gz
+    tar xzf ./actions-runner-linux-x64-${GHA_RUNNER_VERSION}.tar.gz
     ./config.sh --url #{ENV['REPOSITORY_URL']} --token #{ENV['RUNNER_TOKEN']}
     nohup ./run.sh &
   SHELL

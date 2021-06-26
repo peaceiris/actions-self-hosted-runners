@@ -127,6 +127,8 @@ Vagrant.configure("2") do |config|
 
     # install Linuxbrew
     /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+    echo "eval \$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" >> ~/.bashrc
     echo "eval \$($(brew --prefix)/bin/brew shellenv)" >> ~/.bashrc
     brew doctor
     brew update

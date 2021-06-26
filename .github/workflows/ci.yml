@@ -4,7 +4,11 @@ on:
   push:
     branches:
       - main
+    paths-ignore:
+      - "*.md"
   pull_request:
+    paths-ignore:
+      - "*.md"
 
 jobs:
   vagrant:
@@ -27,5 +31,15 @@ jobs:
         run: |
           gsed -i 's@./config.sh@# ./config.sh@g' Vagrantfile
           gsed -i 's@nohup ./run.sh@# nohup ./run.sh@g' Vagrantfile
+
+      - name: Generate .env
+        run: |
+          cat <<- EOF > .env
+          VB_CPUS = '2'
+          VB_MEMORY = '4096'
+          VB_DISK_SIZE = '7GB'
+          GHA_RUNNER_URL = ''
+          GHA_RUNNER_TOKEN = ''
+          EOF
 
       - run: VAGRANT_EXPERIMENTAL="disks" vagrant up

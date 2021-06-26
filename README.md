@@ -10,8 +10,8 @@ GitHub Actions self-hosted runner on VirtualBox with Vagrant.
 
 ```sh
 git clone https://github.com/peaceiris/actions-self-hosted-runners.git
-cd ./actions-self-hosted-runners/ubuntu-20.04
-git checkout v0.1.0
+cd ./actions-self-hosted-runners/images/ubuntu-20.04
+git checkout v0.2.0
 vim .env
 vagrant plugin install dotenv
 VAGRANT_EXPERIMENTAL="disks" vagrant up

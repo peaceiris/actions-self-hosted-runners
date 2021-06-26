@@ -8,7 +8,7 @@ on:
 
 jobs:
   vagrant:
-    runs-on: ubuntu-20.04
+    runs-on: macos-10.15
     timeout-minutes: 60
     strategy:
       matrix:
@@ -20,24 +20,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Install VirtualBox
-        run: |
-          sudo apt-get update && sudo apt-get upgrade -y
-          wget -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- | sudo apt-key add -
-          wget -q https://www.virtualbox.org/download/oracle_vbox.asc -O- | sudo apt-key add -
-          sudo add-apt-repository "deb http://download.virtualbox.org/virtualbox/debian focal contrib"
-          sudo apt-get update
-          sudo apt-get install -y virtualbox-6.1
-
-      - name: Install vagrant
-        run: |
-          curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
-          sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
-          sudo apt-get update && sudo apt-get install -y vagrant
-
       - run: vagrant plugin install dotenv
       - name: Comment out runner scripts
         run: |
           sed -i 's@./config.sh@# ./config.sh@g' Vagrantfile
           sed -i 's@nohup ./run.sh@# nohup ./run.sh@g' Vagrantfile
+
       - run: VAGRANT_EXPERIMENTAL="disks" vagrant up

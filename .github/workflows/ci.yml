@@ -20,10 +20,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - run: brew install gnu-sed
+
       - run: vagrant plugin install dotenv
       - name: Comment out runner scripts
         run: |
-          sed -i 's@./config.sh@# ./config.sh@g' Vagrantfile
-          sed -i 's@nohup ./run.sh@# nohup ./run.sh@g' Vagrantfile
+          gsed -i 's@./config.sh@# ./config.sh@g' Vagrantfile
+          gsed -i 's@nohup ./run.sh@# nohup ./run.sh@g' Vagrantfile
 
       - run: VAGRANT_EXPERIMENTAL="disks" vagrant up

@@ -35,8 +35,8 @@ jobs:
       - name: Generate .env
         run: |
           cat <<- EOF > .env
-          VB_CPUS = 2
-          VB_MEMORY = 1024 * 4
+          VB_CPUS = '2'
+          VB_MEMORY = '4096'
           VB_DISK_SIZE = '7GB'
           GHA_RUNNER_URL = ''
           GHA_RUNNER_TOKEN = ''

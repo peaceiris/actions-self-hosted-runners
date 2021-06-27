@@ -80,6 +80,7 @@
   - name: Add gcloud GPG key
     apt_key:
       url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+      keyring: /usr/share/keyrings/cloud.google.gpg
   - name: Add gcloud apt repository
     apt_repository:
       update_cache: true

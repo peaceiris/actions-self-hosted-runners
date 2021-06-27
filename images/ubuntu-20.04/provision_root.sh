@@ -29,7 +29,6 @@ systemctl restart docker
 
 # Install docker-compose
 DOCKER_COMPOSE_VERSION=$(curl -s https://api.github.com/repos/docker/compose/releases/latest | jq -r '.tag_name')
-export DOCKER_COMPOSE_VERSION
 curl -sL "https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 chmod +x /usr/local/bin/docker-compose
 
@@ -48,10 +47,8 @@ sudo apt-get install -y google-chrome-stable
 
 # Install ChromeDriver
 CHROMEDRIVER_TEMPDIR=$(mktemp -d)
-export CHROMEDRIVER_TEMPDIR
 wget -O "${CHROMEDRIVER_TEMPDIR}/LATEST_RELEASE http://chromedriver.storage.googleapis.com/LATEST_RELEASE"
 CHROMEDRIVER_LATEST_VERSION=$(cat "${CHROMEDRIVER_TEMPDIR}/LATEST_RELEASE")
-export CHROMEDRIVER_LATEST_VERSION
 wget -O "${CHROMEDRIVER_TEMPDIR}/chromedriver.zip" "http://chromedriver.storage.googleapis.com/${CHROMEDRIVER_LATEST_VERSION}/chromedriver_linux64.zip"
 sudo unzip "${CHROMEDRIVER_TEMPDIR}/chromedriver.zip" chromedriver -d /usr/local/bin/
 

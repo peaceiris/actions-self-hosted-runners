@@ -47,7 +47,7 @@ sudo apt-get install -y google-chrome-stable
 
 # Install ChromeDriver
 CHROMEDRIVER_TEMPDIR=$(mktemp -d)
-wget -O "${CHROMEDRIVER_TEMPDIR}/LATEST_RELEASE http://chromedriver.storage.googleapis.com/LATEST_RELEASE"
+wget -O "${CHROMEDRIVER_TEMPDIR}/LATEST_RELEASE" http://chromedriver.storage.googleapis.com/LATEST_RELEASE
 CHROMEDRIVER_LATEST_VERSION=$(cat "${CHROMEDRIVER_TEMPDIR}/LATEST_RELEASE")
 wget -O "${CHROMEDRIVER_TEMPDIR}/chromedriver.zip" "http://chromedriver.storage.googleapis.com/${CHROMEDRIVER_LATEST_VERSION}/chromedriver_linux64.zip"
 sudo unzip "${CHROMEDRIVER_TEMPDIR}/chromedriver.zip" chromedriver -d /usr/local/bin/

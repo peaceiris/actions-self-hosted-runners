@@ -60,4 +60,4 @@ rm -f "terraform_${TERRAFORM_VERSION}_linux_amd64.zip"
 
 apt-get autoremove -y
 
-ulimit -n 8192
+ulimit -n unlimited

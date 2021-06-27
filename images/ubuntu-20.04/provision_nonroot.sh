@@ -13,7 +13,6 @@ brew doctor
 brew update
 
 # Install additional brew packages
-ulimit -n unlimited
 brew install \
   ansible \
   ansible-lint \

@@ -101,44 +101,47 @@ reloadEtcEnvironment
 
 # Install additional brew packages
 brew install \
+    ansible \
+    ansible-lint \
+    aquasecurity/trivy/trivy \
+    awscli \
+    bash \
+    clang-format \
+    cloudflare/cloudflare/cloudflared \
+    direnv \
+    gcc \
+    gh \
     git \
     git-lfs \
-    bash \
-    make \
-    gcc \
-    node \
-    hadolint \
-    poetry \
-    kubectl \
-    kustomize \
-    skaffold \
-    kind \
-    helm \
-    minikube \
-    gh \
-    netlify-cli \
-    vercel-cli \
-    cloudflare/cloudflare/cloudflared \
-    awscli \
-    clang-format \
-    direnv \
-    node \
     go \
     golangci-lint \
-    mage \
     goreleaser/tap/goreleaser \
+    hadolint \
+    helm \
     hyperfine \
+    jq \
+    kind \
+    kubectl \
+    kustomize \
+    mage \
+    make \
+    minikube \
+    netlify-cli \
     nkf \
+    node \
+    poetry \
     pyenv \
     qrencode \
     rbenv \
     shellcheck \
+    skaffold \
     tree \
-    yarn \
+    vercel-cli \
     wget \
-    jq \
-    aquasecurity/trivy/trivy \
+    yamllint \
+    yarn \
     zstd
+
 git lfs install
 npm i -g npm
 # create symlinks for zstd in /usr/local/bin

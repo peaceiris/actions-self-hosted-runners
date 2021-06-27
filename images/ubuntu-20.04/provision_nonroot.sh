@@ -32,9 +32,9 @@ function setEtcEnvironmentVariable {
     variable_value="$2"
 
     if grep "$variable_name" /etc/environment > /dev/null; then
-        replaceEtcEnvironmentVariable $variable_name $variable_value
+        replaceEtcEnvironmentVariable "${variable_name}" "${variable_value}"
     else
-        addEtcEnvironmentVariable $variable_name $variable_value
+        addEtcEnvironmentVariable "${variable_name}" "${variable_value}"
     fi
 }
 
@@ -75,7 +75,7 @@ function appendEtcEnvironmentPath {
 #       replace the values of the current environment
 function  reloadEtcEnvironment {
     # add `export ` to every variable of /etc/environemnt except PATH and eval the result shell script
-    eval $(grep -v '^PATH=' /etc/environment | sed -e 's%^%export %')
+    eval "$(grep -v '^PATH=' /etc/environment | sed -e 's%^%export %')"
     # handle PATH specially
     etc_path=$(getEtcEnvironmentVariable PATH)
     export PATH="$PATH:$etc_path"

@@ -27,8 +27,8 @@ jobs:
       - run: brew install gnu-sed ansible yamllint ansible-lint
       - run: vagrant plugin install dotenv
       - run: vagrant validate
-      - run: yamllint playbook_root.yml
-      - run: ansible-lint playbook_root.yml
+      - run: yamllint playbook.yml
+      - run: ansible-lint playbook.yml
       # - run: ansible-test
 
       - name: Comment out runner scripts

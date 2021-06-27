@@ -24,7 +24,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - run: brew install gnu-sed
+      - run: brew install gnu-sed shellcheck
       - run: vagrant plugin install dotenv
       - run: vagrant validate
       - run: shellcheck provision_root.sh

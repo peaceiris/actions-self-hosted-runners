@@ -108,7 +108,6 @@ brew install \
   ansible \
   ansible-lint \
   aquasecurity/trivy/trivy \
-  awscli \
   bash \
   clang-format \
   cloudflare/cloudflare/cloudflared \

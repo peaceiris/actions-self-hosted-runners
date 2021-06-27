@@ -25,13 +25,12 @@ jobs:
       - uses: actions/checkout@v2
 
       - run: brew install gnu-sed ansible yamllint ansible-lint
-
+      - run: vagrant plugin install dotenv
       - run: vagrant validate
       - run: yamllint playbook_root.yml
       - run: ansible-lint playbook_root.yml
       # - run: ansible-test
 
-      - run: vagrant plugin install dotenv
       - name: Comment out runner scripts
         run: |
           gsed -i 's@./config.sh@# ./config.sh@g' Vagrantfile

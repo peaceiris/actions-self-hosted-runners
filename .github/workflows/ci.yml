@@ -24,12 +24,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - run: brew install gnu-sed ansible yamllint ansible-lint
+      - run: brew install gnu-sed
       - run: vagrant plugin install dotenv
       - run: vagrant validate
-      - run: yamllint playbook.yml
-      - run: ansible-lint playbook.yml
-      # - run: ansible-test
+      - run: shellcheck provision_root.sh
+      - run: shellcheck provision_nonroot.sh
 
       - name: Comment out runner scripts
         run: |

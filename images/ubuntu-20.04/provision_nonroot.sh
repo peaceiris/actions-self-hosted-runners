@@ -1,3 +1,9 @@
+#!/usr/bin/env bash
+
+# fail on unset variables and command errors
+set -eu -o pipefail # -x: is for debugging
+
+
 # https://github.com/actions/virtual-environments/blob/win19/20210620.1/images/linux/scripts/helpers/etc-environment.sh
 
 function getEtcEnvironmentVariable {
@@ -26,9 +32,9 @@ function setEtcEnvironmentVariable {
     variable_value="$2"
 
     if grep "$variable_name" /etc/environment > /dev/null; then
-        replaceEtcEnvironmentVariable $variable_name $variable_value
+        replaceEtcEnvironmentVariable "${variable_name}" "${variable_value}"
     else
-        addEtcEnvironmentVariable $variable_name $variable_value
+        addEtcEnvironmentVariable "${variable_name}" "${variable_value}"
     fi
 }
 
@@ -69,20 +75,17 @@ function appendEtcEnvironmentPath {
 #       replace the values of the current environment
 function  reloadEtcEnvironment {
     # add `export ` to every variable of /etc/environemnt except PATH and eval the result shell script
-    eval $(grep -v '^PATH=' /etc/environment | sed -e 's%^%export %')
+    eval "$(grep -v '^PATH=' /etc/environment | sed -e 's%^%export %')"
     # handle PATH specially
     etc_path=$(getEtcEnvironmentVariable PATH)
     export PATH="$PATH:$etc_path"
 }
 
-# install Linuxbrew
-# cf. https://github.com/actions/virtual-environments/blob/win19/20210620.1/images/linux/scripts/installers/homebrew.sh
-# Install the Homebrew on Linux
+# Install Linuxbrew
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-eval $(/home/linuxbrew/.linuxbrew/bin/brew shellenv)
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 echo "eval \$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" >> ~/.profile
 echo "eval \$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" >> ~/.bash_profile
-echo "eval \$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" >> ~/.bashrc
 brew doctor
 brew update
 
@@ -101,48 +104,52 @@ reloadEtcEnvironment
 
 # Install additional brew packages
 brew install \
-    git \
-    git-lfs \
-    bash \
-    make \
-    gcc \
-    node \
-    hadolint \
-    poetry \
-    kubectl \
-    kustomize \
-    skaffold \
-    kind \
-    helm \
-    minikube \
-    gh \
-    netlify-cli \
-    vercel-cli \
-    cloudflare/cloudflare/cloudflared \
-    awscli \
-    clang-format \
-    direnv \
-    node \
-    go \
-    golangci-lint \
-    mage \
-    goreleaser/tap/goreleaser \
-    hyperfine \
-    nkf \
-    pyenv \
-    qrencode \
-    rbenv \
-    shellcheck \
-    tree \
-    yarn \
-    wget \
-    jq \
-    aquasecurity/trivy/trivy \
-    zstd
+  ansible \
+  ansible-lint \
+  aquasecurity/trivy/trivy \
+  bash \
+  clang-format \
+  direnv \
+  gcc \
+  gh \
+  git \
+  git-lfs \
+  go \
+  golangci-lint \
+  goreleaser/tap/goreleaser \
+  hadolint \
+  helm \
+  hyperfine \
+  jq \
+  kind \
+  kubectl \
+  kustomize \
+  mage \
+  make \
+  minikube \
+  netlify-cli \
+  nkf \
+  node \
+  poetry \
+  pyenv \
+  qrencode \
+  rbenv \
+  shellcheck \
+  skaffold \
+  tree \
+  vercel-cli \
+  wget \
+  yamllint \
+  yarn \
+  zstd
+
 git lfs install
 npm i -g npm
 # create symlinks for zstd in /usr/local/bin
-find $(brew --prefix)/bin -name *zstd* -exec sudo sh -c 'ln -s {} /usr/local/bin/$(basename {})' ';'
+find "$(brew --prefix)/bin" -name "*zstd*" -exec sudo sh -c 'ln -s "$1" /usr/local/bin/$(basename "$1")' _ {} \;
+echo "export PATH=\"/home/linuxbrew/.linuxbrew/opt/clang-format/bin:\${PATH}\"" >> ~/.bash_profile
 
 # Install deno
 curl -fsSL https://deno.land/x/install/install.sh | sh
+echo "export PATH=\"\${HOME}/.deno/bin:\${PATH}\"" >> ~/.profile
+echo "export PATH=\"\${HOME}/.deno/bin:\${PATH}\"" >> ~/.bash_profile

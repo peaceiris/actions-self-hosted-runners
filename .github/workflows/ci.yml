@@ -25,10 +25,8 @@ jobs:
       - uses: actions/checkout@v2
 
       - run: brew install gnu-sed shellcheck
-      - run: vagrant plugin install dotenv
-      - run: vagrant validate
-      - run: shellcheck provision_root.sh
-      - run: shellcheck provision_nonroot.sh
+      - run: make vagrant-validate
+      - run: make shellcheck
 
       - name: Comment out runner scripts
         run: |
@@ -45,61 +43,5 @@ jobs:
           GHA_RUNNER_TOKEN = ''
           EOF
 
-      - run: VAGRANT_EXPERIMENTAL="disks" vagrant up
-
-      - name: vagrant ssh
-        run: |
-          vagrant ssh << EOS
-          docker version
-          docker-compose version
-          jq --version
-          python3 -V
-          python3 -m pip -V
-          gcloud --version
-          google-chrome --version
-          chromedriver --version
-          terraform version
-
-          brew --version
-          ansible --version
-          ansible-lint --version
-          trivy --version
-          bash --version
-          clang-format --version
-          direnv --version
-          gcc --version
-          gh --version
-          git --version
-          git-lfs --version
-          go version
-          golangci-lint --version
-          goreleaser --version
-          hadolint --version
-          helm version
-          hyperfine --version
-          jq --version
-          kind version
-          kubectl version
-          kustomize version
-          mage --version
-          make --version
-          minikube version
-          netlify --version
-          nkf --version
-          node --version
-          poetry --version
-          pyenv --version
-          qrencode --version
-          rbenv --version
-          shellcheck --version
-          skaffold version
-          tree --version
-          vercel --version
-          wget --version
-          yamllint --version
-          yarn --version
-          zstd --version
-
-          npm -v
-          deno --version
-          EOS
+      - run: make up
+      - run: make bump-version

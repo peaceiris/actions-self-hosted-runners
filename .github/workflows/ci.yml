@@ -44,4 +44,4 @@ jobs:
           EOF
 
       - run: make up
-      - run: make bump-version
+      - run: make dump-version

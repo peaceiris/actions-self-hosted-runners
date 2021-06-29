@@ -7,7 +7,7 @@ up: install
 	VAGRANT_EXPERIMENTAL="disks" vagrant up
 
 .PHONY: vagrant-validate
-vagrant-validate:
+vagrant-validate: install
 	vagrant validate
 
 .PHONY: shellcheck

@@ -108,6 +108,7 @@ brew install \
   ansible-lint \
   aquasecurity/trivy/trivy \
   bash \
+  clang-format \
   direnv \
   gcc \
   gh \
@@ -146,6 +147,7 @@ git lfs install
 npm i -g npm
 # create symlinks for zstd in /usr/local/bin
 find "$(brew --prefix)/bin" -name "*zstd*" -exec sudo sh -c 'ln -s "$1" /usr/local/bin/$(basename "$1")' _ {} \;
+echo "export PATH=\"/home/linuxbrew/.linuxbrew/opt/clang-format/bin:\${PATH}\"" >> ~/.bash_profile
 
 # Install deno
 curl -fsSL https://deno.land/x/install/install.sh | sh

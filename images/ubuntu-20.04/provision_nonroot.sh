@@ -82,13 +82,12 @@ function  reloadEtcEnvironment {
 }
 
 # Install Linuxbrew
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)" || true
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" || true
 echo "eval \$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" >> ~/.profile
 echo "eval \$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" >> ~/.bash_profile
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-brew doctor
-brew update
+brew doctor || true
+brew update || true
 
 # Update /etc/environemnt
 ## Put HOMEBREW_* variables

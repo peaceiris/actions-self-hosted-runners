@@ -21,7 +21,7 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.provision :root_user, type: "shell", path: "provision_root.sh"
-  config.vm.provision :vagrant_user, type: "shell", privileged: false, path: "provision_nonroot.sh"
+  config.vm.provision :root_user, type: "shell", path: "provision_nonroot.sh"
 
   config.vm.provision :vagrant_user_runner, type: "shell", privileged: false, inline: <<-SHELL
     # Install actions/runner

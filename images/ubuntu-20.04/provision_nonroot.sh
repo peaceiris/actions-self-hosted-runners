@@ -86,8 +86,7 @@ function  reloadEtcEnvironment {
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 echo "eval \$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" >> ~/.profile
 echo "eval \$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" >> ~/.bash_profile
-brew doctor
-brew update
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
 # Update /etc/environemnt
 ## Put HOMEBREW_* variables

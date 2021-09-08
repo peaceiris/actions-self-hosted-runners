@@ -91,9 +91,10 @@ brew update
 
 # Update /etc/environemnt
 ## Put HOMEBREW_* variables
-brew shellenv|grep 'export HOMEBREW'|sed -E 's/^export (.*);$/\1/' | sudo tee -a /etc/environment
+brew_shellenv="/home/linuxbrew/.linuxbrew/bin/brew shellenv"
+$brew_shellenv | grep 'export HOMEBREW' | sed -E 's/^export (.*);$/\1/' | tr -d '"' | sudo tee -a /etc/environment
 # add brew executables locations to PATH
-brew_path=$(brew shellenv|grep  '^export PATH' |sed -E 's/^export PATH="([^$]+)\$.*/\1/')
+brew_path=$($brew_shellenv | grep '^export PATH' | sed -E 's/^export PATH="([^$]+)\$.*/\1/')
 prependEtcEnvironmentPath "$brew_path"
 setEtcEnvironmentVariable HOMEBREW_NO_AUTO_UPDATE 1
 setEtcEnvironmentVariable HOMEBREW_CLEANUP_PERIODIC_FULL_DAYS 3650

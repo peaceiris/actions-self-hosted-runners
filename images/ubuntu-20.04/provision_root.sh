@@ -12,7 +12,6 @@ apt-get install -y \
   bash \
   build-essential \
   clang-format \
-  gh \
   git \
   git-lfs \
   jq \

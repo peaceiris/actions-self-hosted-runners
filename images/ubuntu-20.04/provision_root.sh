@@ -5,6 +5,9 @@ set -eu -o pipefail # -x: is for debugging
 
 apt-get update -y
 apt-get upgrade -y
+apt-get install -y software-properties-common
+add-apt-repository ppa:git-core/ppa
+apt-get update -y
 apt-get install -y \
   build-essential \
   jq \
@@ -14,7 +17,15 @@ apt-get install -y \
   python3-dev \
   python3-pip \
   python3-venv \
-  wget
+  wget \
+  git \
+  clang-format \
+  nkf \
+  shellcheck \
+  tree \
+  yamllint \
+  zstd \
+  bash
 
 # Install docker
 apt-get install -y apt-transport-https ca-certificates curl gnupg lsb-release

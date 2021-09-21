@@ -9,23 +9,31 @@ apt-get install -y software-properties-common
 add-apt-repository ppa:git-core/ppa
 apt-get update -y
 apt-get install -y \
+  bash \
   build-essential \
+  clang-format \
+  gh \
+  git \
+  git-lfs \
   jq \
   libffi-dev \
   libssl-dev \
+  nkf \
   python3 \
   python3-dev \
   python3-pip \
   python3-venv \
-  wget \
-  git \
-  clang-format \
-  nkf \
   shellcheck \
   tree \
+  wget \
   yamllint \
-  zstd \
-  bash
+  zstd
+
+# Install gh
+curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo gpg --dearmor -o /usr/share/keyrings/githubcli-archive-keyring.gpg
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null
+apt-get update -y
+apt-get install -y gh
 
 # Install docker
 apt-get install -y apt-transport-https ca-certificates curl gnupg lsb-release

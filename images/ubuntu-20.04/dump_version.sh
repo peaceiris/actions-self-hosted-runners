@@ -7,13 +7,15 @@ vagrant ssh << EOS
 set -x
 docker version
 docker-compose version
-jq --version
 python3 -V
 python3 -m pip -V
 gcloud --version
 google-chrome --version
 chromedriver --version
 terraform version
+node -v
+npm -v
+yarn -v
 
 bash --version
 clang-format --version

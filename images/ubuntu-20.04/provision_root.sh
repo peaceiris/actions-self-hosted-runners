@@ -82,4 +82,9 @@ wget "https://github.com/hadolint/hadolint/releases/download/${HADOLINT_VERSION}
 mv hadolint-Linux-x86_64 /usr/local/bin/hadolint
 chmod 755 /usr/local/bin/hadolint
 
+# Install node, npm, and yarn
+curl -fsSL https://deb.nodesource.com/setup_14.x | bash -
+apt-get install -y nodejs
+npm install -g npm yarn
+
 apt-get autoremove -y

@@ -82,12 +82,28 @@ function  reloadEtcEnvironment {
 }
 
 # Install Linuxbrew
+# cf. https://github.com/actions/virtual-environments/blob/win22/20210920.1/images/linux/scripts/installers/homebrew.sh
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" || true
 echo "eval \$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" >> ~/.profile
 echo "eval \$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)" >> ~/.bash_profile
 brew doctor || true
 brew update || true
+
+# Reset brew repository directory to make the brew clean after chmoding /home
+# cf. https://github.com/actions/virtual-environments/blob/win22/20210920.1/images/linux/post-generation/homebrew-permissions.sh
+cd $(brew --repo)
+git reset --hard
+
+brew_folder="/home/linuxbrew/"
+homebrew_user=$(cut -d: -f1 /etc/passwd | tail -1)
+
+if [ -d "$brew_folder" ]; then
+    brew_folder_owner=$(ls -ld $brew_folder | awk '{print $3}')
+    if [ "$homebrew_user" != "$brew_folder_owner" ]; then
+        chown "$homebrew_user":docker -R $brew_folder
+    fi
+fi
 
 # Update /etc/environemnt
 ## Put HOMEBREW_* variables

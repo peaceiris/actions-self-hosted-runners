@@ -92,16 +92,16 @@ brew update || true
 
 # Reset brew repository directory to make the brew clean after chmoding /home
 # cf. https://github.com/actions/virtual-environments/blob/win22/20210920.1/images/linux/post-generation/homebrew-permissions.sh
-cd $(brew --repo)
+cd "$(brew --repo)"
 git reset --hard
 
 brew_folder="/home/linuxbrew/"
 homebrew_user=$(cut -d: -f1 /etc/passwd | tail -1)
 
 if [ -d "$brew_folder" ]; then
-    brew_folder_owner=$(ls -ld $brew_folder | awk '{print $3}')
-    if [ "$homebrew_user" != "$brew_folder_owner" ]; then
-        chown "$homebrew_user":docker -R $brew_folder
+    brew_folder_owner=$(find "${brew_folder}" -maxdepth 1 -type d | awk '{print $3}')
+    if [ "${homebrew_user}" != "${brew_folder_owner}" ]; then
+        chown "$homebrew_user":docker -R "${brew_folder}"
     fi
 fi
 

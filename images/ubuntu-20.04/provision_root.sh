@@ -76,4 +76,10 @@ curl -sLO "https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/terrafo
 unzip -qq "terraform_${TERRAFORM_VERSION}_linux_amd64.zip" -d /usr/local/bin
 rm -f "terraform_${TERRAFORM_VERSION}_linux_amd64.zip"
 
+# Install hadolint
+HADOLINT_VERSION=$(curl -s "https://api.github.com/repos/hadolint/hadolint/releases/latest" | jq -r '.tag_name')
+wget "https://github.com/hadolint/hadolint/releases/download/${HADOLINT_VERSION}/hadolint-Linux-x86_64"
+mv hadolint-Linux-x86_64 /usr/local/bin/hadolint
+chmod 755 /usr/local/bin/hadolint
+
 apt-get autoremove -y

@@ -77,9 +77,18 @@ unzip -qq "terraform_${TERRAFORM_VERSION}_linux_amd64.zip" -d /usr/local/bin
 rm -f "terraform_${TERRAFORM_VERSION}_linux_amd64.zip"
 
 # Install hadolint
-HADOLINT_VERSION=$(curl -s "https://api.github.com/repos/hadolint/hadolint/releases/latest" | jq -r '.tag_name')
+HADOLINT_VERSION=$(curl -fsi "https://github.com/hadolint/hadolint/releases/latest" | awk -F/ '/^(L|l)ocation:/ {print $(NF)}' | tr -d '\r')
 wget "https://github.com/hadolint/hadolint/releases/download/${HADOLINT_VERSION}/hadolint-Linux-x86_64"
 mv hadolint-Linux-x86_64 /usr/local/bin/hadolint
 chmod 755 /usr/local/bin/hadolint
 
+# Install node, npm, and yarn
+curl -fsSL https://deb.nodesource.com/setup_14.x | bash -
+apt-get install -y nodejs
+npm install -g npm
+curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | gpg --dearmor | sudo tee /usr/share/keyrings/yarnkey.gpg >/dev/null
+echo "deb [signed-by=/usr/share/keyrings/yarnkey.gpg] https://dl.yarnpkg.com/debian stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+apt-get update && apt-get install -y yarn
+
+# Cleanup
 apt-get autoremove -y

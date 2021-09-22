@@ -13,6 +13,7 @@ gcloud --version
 google-chrome --version
 chromedriver --version
 terraform version
+hadolint --version
 node -v
 npm -v
 yarn -v

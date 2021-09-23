@@ -3,11 +3,10 @@
 # fail on unset variables and command errors
 set -eu -o pipefail # -x: is for debugging
 
-apt-get update -y
+apt-get update
 apt-get upgrade -y
 apt-get install -y software-properties-common
-add-apt-repository ppa:git-core/ppa
-apt-get update -y
+add-apt-repository --yes --update ppa:git-core/ppa
 apt-get install -y \
   bash \
   build-essential \
@@ -89,6 +88,42 @@ npm install -g npm
 curl -sL https://dl.yarnpkg.com/debian/pubkey.gpg | gpg --dearmor | sudo tee /usr/share/keyrings/yarnkey.gpg >/dev/null
 echo "deb [signed-by=/usr/share/keyrings/yarnkey.gpg] https://dl.yarnpkg.com/debian stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
 apt-get update && apt-get install -y yarn
+
+# npm install -g
+npm install -g vercel netlify-cli
+
+# ansible
+apt-add-repository --yes --update ppa:ansible/ansible
+apt-get install -y ansible ansible-lint
+
+# trivy
+apt-get install -y wget apt-transport-https gnupg lsb-release
+wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | sudo apt-key add -
+echo deb https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main | sudo tee -a /etc/apt/sources.list.d/trivy.list
+apt-get update
+apt-get install -y trivy
+
+# golang
+add-apt-repository --yes --update ppa:longsleep/golang-backports
+apt-get install -y golang
+export GOPATH="${HOME}/go"
+export PATH="${GOPATH}/bin:${PATH}"
+echo 'export GOPATH="${HOME}/go"' >> "${HOME}/.bashrc"
+echo 'export PATH="${GOPATH}/bin:${PATH}"' >> "${HOME}/.bashrc"
+
+# golangci-lint
+curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.40.1
+
+# goreleaser
+echo 'deb [trusted=yes] https://repo.goreleaser.com/apt/ /' | sudo tee /etc/apt/sources.list.d/goreleaser.list
+apt-get update
+apt-get install -y goreleaser
+
+# mage
+go install github.com/magefile/mage@latest
+
+# poetry
+curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python -
 
 # Cleanup
 apt-get autoremove -y

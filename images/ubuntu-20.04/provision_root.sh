@@ -99,7 +99,7 @@ apt-get install -y ansible ansible-lint
 # trivy
 apt-get install -y wget apt-transport-https gnupg lsb-release
 wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | sudo apt-key add -
-echo deb https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main | sudo tee -a /etc/apt/sources.list.d/trivy.list
+echo "deb https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main" | sudo tee -a /etc/apt/sources.list.d/trivy.list
 apt-get update
 apt-get install -y trivy
 
@@ -108,11 +108,11 @@ add-apt-repository --yes --update ppa:longsleep/golang-backports
 apt-get install -y golang
 export GOPATH="${HOME}/go"
 export PATH="${GOPATH}/bin:${PATH}"
-echo 'export GOPATH="${HOME}/go"' >> "${HOME}/.bashrc"
-echo 'export PATH="${GOPATH}/bin:${PATH}"' >> "${HOME}/.bashrc"
+echo "export GOPATH=${HOME}/go" >> "${HOME}/.bashrc"
+echo "export PATH=${GOPATH}/bin:${PATH}" >> "${HOME}/.bashrc"
 
 # golangci-lint
-curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.40.1
+curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b "$(go env GOPATH)/bin" v1.40.1
 
 # goreleaser
 echo 'deb [trusted=yes] https://repo.goreleaser.com/apt/ /' | sudo tee /etc/apt/sources.list.d/goreleaser.list

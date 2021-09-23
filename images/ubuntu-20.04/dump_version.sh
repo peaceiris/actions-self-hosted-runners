@@ -17,6 +17,16 @@ hadolint --version
 node -v
 npm -v
 yarn -v
+vercel --version
+netlify --version
+ansible --version
+ansible-lint --version
+trivy --version
+go version
+golangci-lint --version
+goreleaser --version
+mage --version
+poetry --version
 
 bash --version
 clang-format --version

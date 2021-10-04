@@ -44,11 +44,6 @@ gpasswd -a vagrant docker
 newgrp docker
 systemctl restart docker
 
-# Install docker-compose
-DOCKER_COMPOSE_VERSION=$(curl -s https://api.github.com/repos/docker/compose/releases/latest | jq -r '.tag_name')
-curl -sL "https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-$(uname -s)-$(uname -m)" -o "${HOME}/.docker/cli-plugins/docker-compose"
-chmod +x "${HOME}/.docker/cli-plugins/docker-compose"
-
 # Install google-cloud-sdk (gcloud)
 sudo apt-get install -y unzip xvfb libxi6 libgconf-2-4 default-jdk
 echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" | sudo tee -a /etc/apt/sources.list.d/google-cloud-sdk.list

@@ -6,7 +6,7 @@ set -eu -o pipefail # -x: is for debugging
 vagrant ssh << EOS
 set -x
 docker version
-docker-compose version
+docker compose version
 python3 -V
 python3 -m pip -V
 gcloud --version

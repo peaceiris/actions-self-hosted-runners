@@ -26,9 +26,9 @@ Vagrant.configure("2") do |config|
   config.vm.provision :vagrant_user_runner, type: "shell", privileged: false, inline: <<-SHELL
     # Install actions/runner
     mkdir ~/actions-runner && cd ~/actions-runner
-    GHA_RUNNER_VERSION="2.285.1"
+    GHA_RUNNER_VERSION="2.286.0"
     curl -so actions-runner-linux-x64-${GHA_RUNNER_VERSION}.tar.gz -L https://github.com/actions/runner/releases/download/v${GHA_RUNNER_VERSION}/actions-runner-linux-x64-${GHA_RUNNER_VERSION}.tar.gz
-    echo "5fd98e1009ed13783d17cc73f13ea9a55f21b45ced915ed610d00668b165d3b2  actions-runner-linux-x64-${GHA_RUNNER_VERSION}.tar.gz" | shasum -a 256 -c
+    echo "855b84fe96fda84b22bb9efa2088652d785ed856a7af484b5f4c44f650d7eecf  actions-runner-linux-x64-${GHA_RUNNER_VERSION}.tar.gz" | shasum -a 256 -c
     tar xzf ./actions-runner-linux-x64-${GHA_RUNNER_VERSION}.tar.gz
     # ./config.sh --url #{ENV['GHA_RUNNER_URL']} --token #{ENV['GHA_RUNNER_TOKEN']}
     # nohup ./run.sh &

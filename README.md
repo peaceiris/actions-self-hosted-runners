@@ -13,7 +13,6 @@ GitHub Actions self-hosted runner on VirtualBox with Vagrant.
 ```sh
 git clone https://github.com/peaceiris/actions-self-hosted-runners.git
 cd ./actions-self-hosted-runners/images/ubuntu-20.04
-git checkout v0.x.0  # See the latest release
 vim .env
 make up
 vagrant ssh

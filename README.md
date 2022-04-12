@@ -24,6 +24,7 @@ nohup ./run.sh &
 Create `.env` file as follows.
 
 ```rb
+GHA_RUNNER_VERSION = 'x.xxx.x'
 VB_CPUS = '4'
 VB_MEMORY = '8192'
 VB_DISK_SIZE = '30GB'

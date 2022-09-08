@@ -118,7 +118,7 @@ apt-get install -y goreleaser
 go install github.com/magefile/mage@latest
 
 # poetry
-curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | python3 -
+curl -sSL https://install.python-poetry.org | python3 -
 
 # Cleanup
 apt-get autoremove -y

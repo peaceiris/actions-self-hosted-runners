@@ -11,7 +11,11 @@ on:
       - "*.md"
   workflow_dispatch:
   schedule:
-    - cron: '11 0 * * 6'
+    - cron: "11 0 * * 6"
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   test:
@@ -22,7 +26,7 @@ jobs:
     strategy:
       matrix:
         image:
-          - "ubuntu-20.04"
+          - "ubuntu"
     defaults:
       run:
         working-directory: "images/${{ matrix.image }}"

@@ -13,19 +13,15 @@ GitHub Actions self-hosted runner on VirtualBox with Vagrant.
 ```sh
 git clone https://github.com/peaceiris/actions-self-hosted-runners.git
 cd ./actions-self-hosted-runners/images/ubuntu
-vim .env
+cat << EOF > .env
+GHA_RUNNER_VERSION = 'x.xxx.x'
+VB_CPUS = '4'
+VB_MEMORY = '8192'
+VB_DISK_SIZE = '30GB'
+EOF
 make up
 vagrant ssh
 cd actions-runner
 ./config.sh --url https://github.com/[owner]/[repo] --token [token]
 nohup ./run.sh &
-```
-
-Create `.env` file as follows.
-
-```rb
-GHA_RUNNER_VERSION = 'x.xxx.x'
-VB_CPUS = '4'
-VB_MEMORY = '8192'
-VB_DISK_SIZE = '30GB'
 ```

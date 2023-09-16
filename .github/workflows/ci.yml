@@ -31,7 +31,7 @@ jobs:
       run:
         working-directory: "images/${{ matrix.image }}"
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - run: brew install gnu-sed shellcheck
       - run: make vagrant-validate

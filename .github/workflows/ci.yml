@@ -48,7 +48,7 @@ jobs:
           GHA_RUNNER_VERSION = "$(curl -fsi "https://github.com/actions/runner/releases/latest" | awk -F/ '/^(L|l)ocation:/ {print $(NF)}' | tr -d '\r' | tr -d 'v')"
           VB_CPUS = '2'
           VB_MEMORY = '4096'
-          VB_DISK_SIZE = '7GB'
+          VB_DISK_SIZE = 7000
           GHA_RUNNER_URL = ''
           GHA_RUNNER_TOKEN = ''
           EOF
